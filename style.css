@@ -10,6 +10,12 @@ html {
   box-sizing: border-box;
 }
 
+@media only screen and (max-width: 25em) {
+  html {
+    font-size: 50%;
+  }
+}
+
 body {
   font-family: "Courier New", Courier, monospace;
   padding: 3rem;
@@ -18,79 +24,84 @@ body {
 }
 
 .container {
-    margin-top: 3rem;
-    display: grid;
-    justify-content: center;
+  margin-top: 3rem;
+  display: grid;
+  justify-content: center;
 }
 .login {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-button, input {
-    width: 100%;
-    padding: 2rem;
-    border-radius: 1rem;
-    margin-top: 2rem;
-    font-size: 1.7rem;
-    border: 1px solid #ccc;
+button,
+input {
+  width: 100%;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-top: 2rem;
+  font-size: 1.7rem;
+  border: 1px solid #ccc;
 }
 .btn__login {
-    background-color: #089dfa;
-    color: #fff;
-    cursor: pointer;
+  background-color: #089dfa;
+  color: #fff;
+  cursor: pointer;
 }
 
 .btn__login:hover {
-    background-color: #fff;
-    color: #089dfa;
-    border: 1px solid #089dfa;
+  background-color: #fff;
+  color: #089dfa;
+  border: 1px solid #089dfa;
 }
 .sign-in {
-    margin: 2rem auto;
-    color: #089dfa;
-    transition: all .5s;
-    cursor: pointer;
+  margin: 2rem auto;
+  color: #089dfa;
+  transition: all 0.5s;
+  cursor: pointer;
 }
 
 .sign-in:hover {
-    color: #035080;
+  color: #035080;
 }
 
 .sign-up {
-    margin-top: 2rem;
-    margin-left: auto;
-    color: #089dfa;
+  margin-top: 2rem;
+  margin-left: auto;
+  color: #089dfa;
 }
 
 .sign-up:hover {
-    color: #035080;
-    cursor: pointer;
+  color: #035080;
+  cursor: pointer;
 }
-
 
 .user {
-    margin-top: 3rem;
-    display: grid;
-    justify-content: center;
-    
+  margin-top: 3rem;
+  display: grid;
+  justify-content: center;
 }
-.hidden {
-    display: none;
-}
+
 .image {
-    max-width: 50rem;
-    margin-top: 7rem;
+  max-width: 30rem;
+  max-height: 50rem;
+  margin-top: 7rem;
 }
 .like {
-    margin-top: 7rem;
-    width: 5rem;
-    height: 5rem;
-    fill: #92a0a8;
-    margin-left: auto;
-    cursor: pointer;
+  margin-top: 7rem;
+  width: 5rem;
+  height: 5rem;
+  fill: #92a0a8;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.loading {
+  margin-top: 5rem;
 }
 
 .liked {
-    fill: #089dfa;
+  fill: #089dfa;
+}
+.hidden {
+  display: none;
 }

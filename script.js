@@ -8,6 +8,7 @@ const btnSearch = document.getElementById("search");
 const query = document.getElementById("query");
 const username = document.getElementById("username");
 const btnLogout = document.getElementById("logout");
+const loading = document.querySelector(".loading");
 
 const loginContainer = document.querySelector(".login");
 const userContainer = document.querySelector(".user");
@@ -29,12 +30,16 @@ firebase.auth().onAuthStateChanged((user) => {
 });
 
 const getItem = async function (query) {
-  image.src = "loading.jpg";
+  image.src = `loading.jpg`;
+  loading.classList.add("hidden");
   const search = await fetch(
     `https://foodish-api.herokuapp.com/images/${query}/`
   );
-  const rand = Math.trunc(Math.random() * 65);
-  image.src = `${search.url}${query}${rand}.jpg`;
+  image.style.opacity = "0.4";
+  const rand = Math.trunc(Math.random() * 35) + 1;
+  const img = `${search.url}${query}${rand}.jpg`;
+  console.log(img);
+  image.src = img;
 };
 
 button.addEventListener("click", function (e) {
@@ -111,4 +116,9 @@ btnLike.addEventListener("click", function () {
   if (image.src.includes("loading.jpg"))
     return alert("Kindly search for real images");
   btnLike.classList.toggle("liked");
+});
+
+image.addEventListener("load", function () {
+  image.style.opacity = "1";
+  loading.classList.toggle("hidden");
 });
