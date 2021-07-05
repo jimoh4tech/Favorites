@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Favorites</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2 class="welcome">Welcome To Your Favorites</h2>
+
+      <div class="login ">
+        <h4 id="signIn" class="sign-in">Sign In</h4>
+        <input id="email" type="email" placeholder="Email" />
+        <input id="password" type="password" placeholder="Password" />
+        <button id="login" class="btn__login">LOGIN</button>
+        <h4 id="register" class="sign-up">Sign Up</h4>
+      </div>
+    </div>
+
+    
+    <div class="user hidden">
+      <h3 id="username" class="welcome">Hi, User</h3>
+      <div class="search">
+        <input id="query" type="text" placeholder="Enter food name" />
+        <button id="search" class="btn__login">SEARCH</button>
+      </div>
+      <img id="image" class="image" src="loading.jpg" alt="loading" />
+      <svg class="like">
+        <use href="stripe.svg#icon-heart"></use>
+      </svg>
+      <button id="logout" class="btn__login">LOGOUT</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyC9fRhW3H0fxQP208dIs1lPORdKdgBXAmQ",
+        authDomain: "favorites-6f8c2.firebaseapp.com",
+        projectId: "favorites-6f8c2",
+        storageBucket: "favorites-6f8c2.appspot.com",
+        messagingSenderId: "647380066362",
+        appId: "1:647380066362:web:1bbc752dddc7ef1071d503",
+        measurementId: "G-QXK8L9HNE7",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
