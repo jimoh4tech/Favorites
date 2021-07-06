@@ -9,17 +9,20 @@ const query = document.getElementById("query");
 const username = document.getElementById("username");
 const btnLogout = document.getElementById("logout");
 const loading = document.querySelector(".loading");
+const btnFavorites = document.getElementById("favorites");
 
 const loginContainer = document.querySelector(".login");
 const userContainer = document.querySelector(".user");
 const btnLike = document.querySelector(".like");
+const listItem = document.querySelector(".list");
 
+let currentUser;
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     var uid = user.uid;
     loginContainer.classList.add("hidden");
     userContainer.classList.remove("hidden");
-
+    currentUser = user;
     username.textContent = `Hi, ${user.email}`;
     // ...
   } else {
@@ -32,15 +35,25 @@ firebase.auth().onAuthStateChanged((user) => {
 const getItem = async function (query) {
   image.src = `loading.jpg`;
   loading.classList.add("hidden");
+  btnLike.classList.remove("liked");
   const search = await fetch(
     `https://foodish-api.herokuapp.com/images/${query}/`
   );
   image.style.opacity = "0.4";
   const rand = Math.trunc(Math.random() * 35) + 1;
   const img = `${search.url}${query}${rand}.jpg`;
-  console.log(img);
   image.src = img;
 };
+
+function AddFavorite(userId, imageUrl) {
+  firebase
+    .database()
+    .ref("users/" + userId)
+    .push()
+    .set({
+      image: imageUrl,
+    });
+}
 
 button.addEventListener("click", function (e) {
   if (!email.value || !password.value) return alert("Enter email or password");
@@ -116,9 +129,38 @@ btnLike.addEventListener("click", function () {
   if (image.src.includes("loading.jpg"))
     return alert("Kindly search for real images");
   btnLike.classList.toggle("liked");
+  AddFavorite(currentUser.uid, image.src);
+  alert("Favorite was successfully saved");
+});
+
+btnFavorites.addEventListener("click", function () {
+  
+  firebase
+    .database()
+    .ref()
+    .child("users")
+    .child(currentUser.uid)
+    .once("child_added", (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        var childKey = childSnapshot.key;
+        var childData = childSnapshot.val();
+        const html = `
+      <li class="item">${childData}</li>`;
+        listItem.insertAdjacentHTML("beforeend", html);
+      });
+    });
 });
 
 image.addEventListener("load", function () {
   image.style.opacity = "1";
   loading.classList.toggle("hidden");
+});
+
+listItem.addEventListener("click", function (e) {
+  const imageUrl = e.target.closest(".item").textContent;
+  image.src = `loading.jpg`;
+  loading.classList.remove("hidden");
+  btnLike.classList.add("liked");
+  image.style.opacity = "0.4";
+  image.src = imageUrl;
 });

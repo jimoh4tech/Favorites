@@ -30,15 +30,21 @@
       </div>
       <h2 class="loading hidden">Loading....</h2>
       <img id="image" class="image" src="loading.jpg" alt="loading" />
-      <svg class="like">
-        <use href="stripe.svg#icon-heart"></use>
-      </svg>
+      <div class="favorites">
+        <button id="favorites" class="btn__favorites">FAVORITES</button>
+        <svg class="like">
+          <use href="stripe.svg#icon-heart"></use>
+        </svg>
+      </div>
+      <ul class="list">
+      </ul>
       <button id="logout" class="btn__login">LOGOUT</button>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js"></script>
     <script>
       var firebaseConfig = {
         apiKey: "AIzaSyC9fRhW3H0fxQP208dIs1lPORdKdgBXAmQ",

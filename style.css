@@ -48,6 +48,14 @@ input {
   cursor: pointer;
 }
 
+.btn__favorites {
+  background-color: #089dfa;
+  color: #fff;
+  cursor: pointer;
+  height: 6rem;
+  width: 13rem;
+}
+
 .btn__login:hover {
   background-color: #fff;
   color: #089dfa;
@@ -87,12 +95,12 @@ input {
   margin-top: 7rem;
 }
 .like {
-  margin-top: 7rem;
   width: 5rem;
   height: 5rem;
   fill: #92a0a8;
   margin-left: auto;
   cursor: pointer;
+  margin-top: 2rem;
 }
 
 .loading {
@@ -101,6 +109,24 @@ input {
 
 .liked {
   fill: #089dfa;
+}
+.favorites {
+  display: flex;
+  margin-top: 5rem;
+}
+
+.list {
+  margin-top: 3rem;
+}
+.item {
+  list-style: none;
+  background-color: #089dfa;
+  color: #fff;
+  border-radius: 1rem;
+  padding: 0.7rem;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
 }
 .hidden {
   display: none;
