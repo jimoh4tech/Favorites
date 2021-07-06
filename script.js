@@ -134,26 +134,28 @@ btnLike.addEventListener("click", function () {
 });
 
 btnFavorites.addEventListener("click", function () {
-  let count = 1;
   listItem.innerHTML = "";
-  firebase
-    .database()
-    .ref()
-    .child("users")
-    .child(currentUser.uid)
-    .once("child_added", (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        var childKey = childSnapshot.key;
-        var childData = childSnapshot.val();
-        const html = `
-        <li class="item">
-          <span>${count}</span>
-          <img src="${childData}" alt="Favorites" class="fav" />
-        </li>`;
-        listItem.insertAdjacentHTML("beforeend", html);
-        ++count;
+  if (listItem.innerHTML === "") {
+    let count = 1;
+    firebase
+      .database()
+      .ref()
+      .child("users")
+      .child(currentUser.uid)
+      .once("child_added", (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          const html = `
+          <li class="item">
+            <span>${count}</span>
+            <img src="${childData}" alt="Favorites" class="fav" />
+          </li>`;
+          listItem.insertAdjacentHTML("beforeend", html);
+          ++count;
+        });
       });
-    });
+  }
 });
 
 image.addEventListener("load", function () {
@@ -162,7 +164,8 @@ image.addEventListener("load", function () {
 });
 
 listItem.addEventListener("click", function (e) {
-  const imageUrl = e.target.closest(".item").textContent;
+  const imageUrl = e.target.closest(".fav")?.src;
+  if (!imageUrl) return;
   image.src = `loading.jpg`;
   loading.classList.remove("hidden");
   btnLike.classList.add("liked");
