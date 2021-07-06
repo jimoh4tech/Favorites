@@ -120,13 +120,20 @@ input {
 }
 .item {
   list-style: none;
-  background-color: #089dfa;
-  color: #fff;
+  color: #089dfa;
   border-radius: 1rem;
   padding: 0.7rem;
-  font-size: 1.3rem;
+  font-size: 5rem;
   margin-bottom: 1rem;
+
   cursor: pointer;
+
+  display: flex;
+}
+.fav {
+  max-width: 7rem;
+  max-height: 7rem;
+  margin-left: auto;
 }
 .hidden {
   display: none;

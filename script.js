@@ -134,7 +134,8 @@ btnLike.addEventListener("click", function () {
 });
 
 btnFavorites.addEventListener("click", function () {
-  
+  let count = 1;
+  listItem.innerHTML = "";
   firebase
     .database()
     .ref()
@@ -145,8 +146,12 @@ btnFavorites.addEventListener("click", function () {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         const html = `
-      <li class="item">${childData}</li>`;
+        <li class="item">
+          <span>${count}</span>
+          <img src="${childData}" alt="Favorites" class="fav" />
+        </li>`;
         listItem.insertAdjacentHTML("beforeend", html);
+        ++count;
       });
     });
 });
