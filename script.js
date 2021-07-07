@@ -9,12 +9,16 @@ const query = document.getElementById("query");
 const username = document.getElementById("username");
 const btnLogout = document.getElementById("logout");
 const loading = document.querySelector(".loading");
+const loadingFav = document.querySelector(".load");
 const btnFavorites = document.getElementById("favorites");
 
 const loginContainer = document.querySelector(".login");
 const userContainer = document.querySelector(".user");
 const btnLike = document.querySelector(".like");
 const listItem = document.querySelector(".list");
+
+let count;
+let currentLike = false;
 
 let currentUser;
 firebase.auth().onAuthStateChanged((user) => {
@@ -109,6 +113,7 @@ btnSearch.addEventListener("click", function (e) {
   const value = query.value.toLowerCase();
   if (!value) return alert("Please enter a search value");
   getItem(value);
+  currentLike = false;
 });
 
 btnLogout.addEventListener("click", function (e) {
@@ -128,34 +133,47 @@ btnLogout.addEventListener("click", function (e) {
 btnLike.addEventListener("click", function () {
   if (image.src.includes("loading.jpg"))
     return alert("Kindly search for real images");
-  btnLike.classList.toggle("liked");
-  AddFavorite(currentUser.uid, image.src);
-  alert("Favorite was successfully saved");
+  if (!currentLike) {
+    btnLike.classList.toggle("liked");
+    AddFavorite(currentUser.uid, image.src);
+    count = count ? count : 1;
+    const html = `
+          <li class="item">
+            <span>${count}</span>
+            <img src="${image.src}" alt="Favorites" class="fav" />
+          </li>`;
+    listItem.insertAdjacentHTML("beforeend", html);
+    ++count;
+    alert("Favorite was successfully saved");
+    currentLike = true;
+  } else {
+    alert("Favorite was recently saved!");
+  }
 });
 
 btnFavorites.addEventListener("click", function () {
+  loadingFav.classList.remove("hidden");
   listItem.innerHTML = "";
-  if (listItem.innerHTML === "") {
-    let count = 1;
-    firebase
-      .database()
-      .ref()
-      .child("users")
-      .child(currentUser.uid)
-      .once("child_added", (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-          var childKey = childSnapshot.key;
-          var childData = childSnapshot.val();
-          const html = `
+  count = 1;
+  firebase
+    .database()
+    .ref()
+    .child("users")
+    .child(currentUser.uid)
+    .once("child_added", (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        var childKey = childSnapshot.key;
+        var childData = childSnapshot.val();
+        const html = `
           <li class="item">
             <span>${count}</span>
             <img src="${childData}" alt="Favorites" class="fav" />
           </li>`;
-          listItem.insertAdjacentHTML("beforeend", html);
-          ++count;
-        });
+        listItem.insertAdjacentHTML("beforeend", html);
+        ++count;
       });
-  }
+      loadingFav.classList.add("hidden");
+    });
 });
 
 image.addEventListener("load", function () {
@@ -167,6 +185,7 @@ listItem.addEventListener("click", function (e) {
   const imageUrl = e.target.closest(".fav")?.src;
   if (!imageUrl) return;
   image.src = `loading.jpg`;
+  currentLike = true;
   loading.classList.remove("hidden");
   btnLike.classList.add("liked");
   image.style.opacity = "0.4";

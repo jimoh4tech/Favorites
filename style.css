@@ -103,7 +103,8 @@ input {
   margin-top: 2rem;
 }
 
-.loading {
+.loading,
+.load {
   margin-top: 5rem;
 }
 
